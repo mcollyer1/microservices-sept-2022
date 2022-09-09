@@ -1,0 +1,31 @@
+name: hypertheory-training
+namespace: hypertheory
+extensions:
+  - name: dapr
+    components-path: ./dapr-components
+    enable-profiling: true
+
+services:
+  - name: web-presence-bff
+    project: ./web-presence/WebPresenceBFFSolution/WebPresenceBFF/WebPresenceBFF.csproj
+    bindings:
+      - port: 4201
+        protocol: http
+
+  - name: "training-admin"
+    project: ./training/TrainingManagementSolution/TrainingManagement/TrainingManagement.csproj
+    bindings:
+      - port: 4202
+        protocol: http
+
+  - name: "users"
+    project: ./UsersBoundedContext/UsersSolution/UsersApi/UsersApi.csproj
+
+  - name: "registration-processor"
+    project: ./training/RegistrationProcessorSolution/RegistrationProcessor/RegistrationProcessor.csproj 
+
+  - name: mongodb
+    external: true
+    bindings:
+      - port: 27017
+        connectionString: mongodb://root:TokyoJoe138!@localhost:${port}
